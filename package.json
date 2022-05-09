@@ -1,0 +1,20 @@
+{
+  "name": "dogma-player",
+  "version": "0.0.1",
+  "description": "backend audio player",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": [
+    "dogma-player"
+  ],
+  "author": "Rotegott",
+  "license": "MIT",
+  "dependencies": {
+    "find-exec": "^1.0.2"
+  },
+  "devDependencies": {
+    "jest": "^28.1.0"
+  }
+}
