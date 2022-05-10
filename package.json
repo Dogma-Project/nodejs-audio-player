@@ -1,6 +1,6 @@
 {
   "name": "dogma-player",
-  "version": "0.1.2",
+  "version": "0.2.1",
   "description": "Node.js sound player. Player checks an available player and plays music with open and close handling.",
   "main": "index.js",
   "private": false,
@@ -22,6 +22,10 @@
   "repository": {
     "type": "git",
     "url": "https://gitlab.com/dogma-project/dogma-player.git"
+  },
+  "bugs": {
+    "url": "https://gitlab.com/dogma-project/dogma-player/-/issues",
+    "email": "dogma@rgott.com"
   },
   "homepage": "https://gitlab.com/dogma-project/dogma-player.git",
   "dependencies": {
