@@ -11,10 +11,13 @@ class DogmaPlayer extends EventEmitter {
     /**
      * 
      * @param {Object} opts players, player, verbose
+     * @param {Object} args { playerName: ['opt1', 'opt2'] }
      */
-    constructor(opts) {
+    constructor(opts, args) {
         super();
         opts = opts || {};
+        args = args || {};
+
         this.players = opts.players || [
             'mplayer',
             'afplay',
@@ -33,6 +36,8 @@ class DogmaPlayer extends EventEmitter {
         Logger.log("player detected", this.player);
         this.state = -1;
 
+        this.args = Array.isArray(args[this.player]) ? args[this.player] : [];
+
         this.on("state", (state) => {
             /*
                 -1 - undefined
@@ -50,14 +55,15 @@ class DogmaPlayer extends EventEmitter {
     /**
      * 
      * @param {String} link url or file location
-     * @param {Object} opts 
      */
-    play(link, opts) {
+    play(link) {
 
         this.stop();
         this.emit("state", 1); // pending
 
-        this.#process = spawn(this.player, [link], {
+        const opts = this.args;
+        opts.push(link);
+        this.#process = spawn(this.player, opts, {
 //            stdio: "ignore" 
         });
 

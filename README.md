@@ -14,8 +14,8 @@ npm install dogma-player
 ```
 const DogmaPlayer = require("dogma-player");
 
-const player = new DogmaPlayer(opts = {});
-player.play("http://online.radiorelax.ua/RadioRelax_Instrumental_Live", opts = {});
+const player = new DogmaPlayer(opts = {}, args = {});
+player.play("http://online.radiorelax.ua/RadioRelax_Instrumental_Live");
 
 player.on("ready", (data) => {
 	console.log("playing stream", data); 
@@ -60,10 +60,14 @@ const player = new DogmaPlayer({
 		'cvlc',
 		'powershell'
 	],
-	player: "mplayer", // optional. force specific player
+	player: "mpg123", // optional. force specific player
 	verbose: 0 // logging disabled by default. to enable, set verbose: 1
+}, {
+	"mpg123": ["-v", "-@"] // arguments for a specific player. 
 });
 
+player.play("http://radio.nrcu.gov.ua:8000/golosdonbasu-mp3-m.m3u");
+// mpg123 -v -@ http://radio.nrcu.gov.ua:8000/golosdonbasu-mp3-m.m3u
 ```
 
 ## History
