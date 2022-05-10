@@ -5,9 +5,6 @@ const Logger = require("./logger");
 
 class DogmaPlayer extends EventEmitter {
 
-    #process
-    state
-
     /**
      * 
      * @param {Object} opts players, player, verbose
@@ -34,6 +31,7 @@ class DogmaPlayer extends EventEmitter {
 
         Logger.verbose = opts.verbose || 0;
         Logger.log("player detected", this.player);
+        this.process = null;
         this.state = -1;
 
         this.args = Array.isArray(args[this.player]) ? args[this.player] : [];
@@ -62,35 +60,35 @@ class DogmaPlayer extends EventEmitter {
         this.emit("state", 1); // pending
 
         const opts = [...this.args, link];
-        this.#process = spawn(this.player, opts, {
+        this.process = spawn(this.player, opts, {
 //            stdio: "ignore" 
         });
-        const { pid } = this.#process;
+        const { pid } = this.process;
         const player = this.player;
 
-        this.#process.stdout.on('data', (data) => {
+        this.process.stdout.on('data', (data) => {
             data = data.toString();
             this.emit("log", data);
         });
 
-        this.#process.stderr.on("data", (data) => {
+        this.process.stderr.on("data", (data) => {
             data = data.toString();
             this.emit("error-log", data);
         });
 
-        this.#process.on("spawn", () => {;
+        this.process.on("spawn", () => {;
             Logger.log(`Player ${player} successfully stopped. PID: ${pid}`);
             this.emit("state", 2);
             this.emit("ready", { player, link, pid });
         });
 
-        this.#process.on("close", (code) => { 
+        this.process.on("close", (code) => { 
             Logger.log(`Player ${player} successfully stopped. Code: ${code}. PID: ${pid}`);
             this.emit("state", 0);
             this.emit("close", { player, code, pid });
         });
 
-        this.#process.on("error", (err) => {
+        this.process.on("error", (err) => {
             this.emit("state", 4);
             this.emit("error", err);
         });
@@ -98,7 +96,7 @@ class DogmaPlayer extends EventEmitter {
     }
 
     stop() {
-        if (this.#process) this.#process.kill();
+        if (this.process) this.process.kill();
     }
 
 }
