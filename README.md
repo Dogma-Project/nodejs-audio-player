@@ -9,9 +9,6 @@ Node.js sound player. Player checks an available player and plays music with ope
 npm install dogma-player
 ```
 
-### via git:
-TODO
-
 ## Usage
 
 ```
