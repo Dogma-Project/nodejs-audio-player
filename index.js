@@ -65,6 +65,8 @@ class DogmaPlayer extends EventEmitter {
         this.#process = spawn(this.player, opts, {
 //            stdio: "ignore" 
         });
+        const { pid } = this.#process;
+        const player = this.player;
 
         this.#process.stdout.on('data', (data) => {
             data = data.toString();
@@ -77,23 +79,15 @@ class DogmaPlayer extends EventEmitter {
         });
 
         this.#process.on("spawn", () => {;
-            Logger.log("player", this.player, "successfully spawned. PID:", this.#process.pid);
+            Logger.log(`Player ${player} successfully stopped. PID: ${pid}`);
             this.emit("state", 2);
-            this.emit("ready", { 
-                player: this.player,
-                link,
-                pid: this.#process.pid || -1
-            });
+            this.emit("ready", { player, link, pid });
         });
 
         this.#process.on("close", (code) => { 
-            Logger.log("player", this.player, "successfully stopped. Code:", code);
+            Logger.log(`Player ${player} successfully stopped. Code: ${code}. PID: ${pid}`);
             this.emit("state", 0);
-            this.emit("close", { 
-                player: this.player,
-                code,
-                pid: this.#process.pid || -1
-            });
+            this.emit("close", { player, code, pid });
         });
 
         this.#process.on("error", (err) => {
