@@ -61,8 +61,7 @@ class DogmaPlayer extends EventEmitter {
         this.stop();
         this.emit("state", 1); // pending
 
-        const opts = this.args;
-        opts.push(link);
+        const opts = [...this.args, link];
         this.#process = spawn(this.player, opts, {
 //            stdio: "ignore" 
         });
@@ -78,11 +77,12 @@ class DogmaPlayer extends EventEmitter {
         });
 
         this.#process.on("spawn", () => {;
-            Logger.log("player", this.player, "successfully spawned.");
+            Logger.log("player", this.player, "successfully spawned. PID:", this.#process.pid);
             this.emit("state", 2);
             this.emit("ready", { 
                 player: this.player,
-                link
+                link,
+                pid: this.#process.pid || -1
             });
         });
 
@@ -91,7 +91,8 @@ class DogmaPlayer extends EventEmitter {
             this.emit("state", 0);
             this.emit("close", { 
                 player: this.player,
-                code
+                code,
+                pid: this.#process.pid || -1
             });
         });
 
