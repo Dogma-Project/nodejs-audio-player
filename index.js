@@ -10,7 +10,7 @@ class DogmaPlayer extends EventEmitter {
 
     /**
      * 
-     * @param {Object} opts players, player
+     * @param {Object} opts players, player, verbose
      */
     constructor(opts) {
         super();
@@ -28,6 +28,8 @@ class DogmaPlayer extends EventEmitter {
             'powershell'
         ];
         this.player = opts.player || findExec(this.players); // add exception
+
+        Logger.verbose = opts.verbose || 0;
         Logger.log("player detected", this.player);
         this.state = -1;
 
@@ -45,62 +47,56 @@ class DogmaPlayer extends EventEmitter {
         })
     }
 
+    /**
+     * 
+     * @param {String} link url or file location
+     * @param {Object} opts 
+     */
     play(link, opts) {
 
         this.stop();
-
         this.emit("state", 1); // pending
+
         this.#process = spawn(this.player, [link], {
-//            stdio: "ignore" // check
+//            stdio: "ignore" 
         });
 
         this.#process.stdout.on('data', (data) => {
             data = data.toString();
-            // Logger.log("stdout", data);
             this.emit("log", data);
         });
 
         this.#process.stderr.on("data", (data) => {
             data = data.toString();
-            this.emit("child-error-log", data);
+            this.emit("error-log", data);
         });
 
         this.#process.on("spawn", () => {;
-            Logger.log("Successfully spawned", this.player);
-            this.emit("ready", true);
+            Logger.log("player", this.player, "successfully spawned.");
             this.emit("state", 2);
-        });
-        this.#process.on("error", (err) => {
-            this.emit("parent-error", err);
-            this.emit("state", 4);
+            this.emit("ready", { 
+                player: this.player,
+                link
+            });
         });
 
         this.#process.on("close", (code) => { 
-            if (code !== null) {
-                switch (this.state) {
-                    case 0:
-                        // ignore
-                    break;
-                    case 1:
-                        this.emit("client-fail", code);
-                    break;
-                    case 2:
-                        this.emit("client-error", code);
-                    break;
-                    default:
-                        
-                    break;
-                }
-                this.emit("state", 3);                
-            } else {
-                Logger.log("player", this.player, "successfully stopper");
-            }
+            Logger.log("player", this.player, "successfully stopped. Code:", code);
+            this.emit("state", 0);
+            this.emit("close", { 
+                player: this.player,
+                code
+            });
+        });
+
+        this.#process.on("error", (err) => {
+            this.emit("state", 4);
+            this.emit("error", err);
         });
 
     }
 
     stop() {
-        this.emit("state", 0);
         if (this.#process) this.#process.kill();
     }
 

@@ -1,11 +1,13 @@
 const Logger = {
 
+    verbose: 0,
+
     log: (...args) => {
-        console.log("[DOGMA PLAYER LOG]", ...args);
+        Logger.verbose && console.log("[DOGMA PLAYER LOG]", ...args);
     },
     
     warn: (...args) => {
-        console.warn("[DOGMA PLAYER WARN]", ...args);
+        Logger.verbose && console.warn("[DOGMA PLAYER WARN]", ...args);
     },
     
     error: (...args) => {

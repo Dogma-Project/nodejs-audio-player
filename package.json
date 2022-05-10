@@ -1,13 +1,20 @@
 {
   "name": "dogma-player",
-  "version": "0.0.1",
-  "description": "backend audio player",
+  "version": "0.1.1",
+  "description": "Node.js sound player. Player checks an available player and plays music with open and close handling.",
   "main": "index.js",
   "scripts": {
     "test": "jest"
   },
   "keywords": [
-    "dogma-player"
+    "dogma-player",
+    "sound",
+    "play",
+    "play sound",
+    "music",
+    "play music",
+    "stream",
+    "play stream"
   ],
   "author": "Rotegott",
   "license": "MIT",
