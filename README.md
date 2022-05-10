@@ -22,7 +22,8 @@ player.on("ready", (data) => {
 	/*
 		playing stream {
 			player: 'mplayer', // selected player
-			link: 'http://online.radiorelax.ua/RadioRelax_Instrumental_Live' // playing link
+			link: 'http://online.radiorelax.ua/RadioRelax_Instrumental_Live', // playing link
+			pid: 111111 // player's process id
 		}
 	*/
 	setTimeout(() => { // stop after 3 second
@@ -35,7 +36,8 @@ player.on("close", (data) => {
 	/*
 		stream closed { 
 			player: 'mplayer',  // used player
-			code: 1 // exit code
+			code: 1, // exit code
+			pid: 111111 // closed player's process id
 		}
 	*/
 });
