@@ -1,11 +1,12 @@
 {
   "name": "dogma-player",
-  "version": "0.2.5",
+  "version": "0.3.3",
   "description": "Node.js sound player. Player checks an available player and plays music with open and close handling.",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "types": "./types/index.d.ts",
   "private": false,
   "scripts": {
-    "test": "jest"
+    "example": "tsc && node dist/example.js"
   },
   "keywords": [
     "dogma-player",
@@ -17,21 +18,23 @@
     "stream",
     "play stream"
   ],
-  "author": "Rotegott",
+  "author": "Pluto Rotegott <rotegott@dogma-project.org> (https://dogma-project.org/)",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://gitlab.com/dogma-project/dogma-player.git"
+    "url": "git@github.com:Dogma-Project/nodejs-audio-player.git"
   },
   "bugs": {
-    "url": "https://gitlab.com/dogma-project/dogma-player/-/issues",
-    "email": "dogma@rgott.com"
+    "url": "https://github.com/Dogma-Project/nodejs-audio-player/issues",
+    "email": "rotegott@dogma-project.org"
   },
-  "homepage": "https://gitlab.com/dogma-project/dogma-player.git",
+  "homepage": "https://dogma-project.org/",
   "dependencies": {
     "find-exec": "^1.0.2"
   },
   "devDependencies": {
-    "jest": "^28.1.0"
+    "@types/node": "^20.4.8",
+    "jest": "^28.1.0",
+    "typescript": "^5.2.2"
   }
 }
