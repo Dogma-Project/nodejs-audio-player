@@ -5,20 +5,21 @@ Node.js sound player. Player checks an available player and plays music with ope
 ## Installation
 
 ### via npm:
+
 ```
-npm install dogma-player
+npm install @dogma-project/shell-player
 ```
 
 ## Usage
 
 ```
-const DogmaPlayer = require("dogma-player");
+const DogmaPlayer = require("@dogma-project/shell-player");
 
 const player = new DogmaPlayer(opts = {}, args = {});
 player.play("http://online.radiorelax.ua/RadioRelax_Instrumental_Live");
 
 player.on("ready", (data) => {
-	console.log("playing stream", data); 
+	console.log("playing stream", data);
 	/*
 		playing stream {
 			player: 'mplayer', // selected player
@@ -34,7 +35,7 @@ player.on("ready", (data) => {
 player.on("close", (data) => {
 	console.log("stream closed", data);
 	/*
-		stream closed { 
+		stream closed {
 			player: 'mplayer',  // used player
 			code: 1, // exit code
 			pid: 111111 // closed player's process id
@@ -43,7 +44,7 @@ player.on("close", (data) => {
 });
 
 player.on("error", (err) => {
-	console.error("error while playing stream", err); 
+	console.error("error while playing stream", err);
 });
 ```
 
@@ -65,7 +66,7 @@ const player = new DogmaPlayer({
 	player: "mpg123", // optional. force specific player
 	verbose: 0 // logging disabled by default. to enable, set verbose: 1
 }, {
-	"mpg123": ["-v", "-@"] // arguments for a specific player. 
+	"mpg123": ["-v", "-@"] // arguments for a specific player.
 });
 
 player.play("http://radio.nrcu.gov.ua:8000/golosdonbasu-mp3-m.m3u");
