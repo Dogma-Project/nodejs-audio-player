@@ -91,3 +91,4 @@ class DogmaPlayer extends node_events_1.default {
     }
 }
 exports.default = DogmaPlayer;
+module.exports = DogmaPlayer;

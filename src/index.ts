@@ -116,3 +116,4 @@ class DogmaPlayer extends EventEmitter {
 }
 
 export default DogmaPlayer;
+module.exports = DogmaPlayer;

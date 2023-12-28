@@ -1,6 +1,6 @@
 {
   "name": "@dogma-project/shell-player",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "description": "Node.js sound player. Player checks an available player and plays music with open and close handling.",
   "main": "dist/index.js",
   "types": "./types/index.d.ts",
